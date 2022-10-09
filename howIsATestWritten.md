@@ -18,6 +18,15 @@ expect(a).toBe(b); // Fails
 expect(a).toEqual(b); // Passes
 ```
 
+- Other useful matcher functions include `toHaveBeenCalled`.
+- Use this to test if a certain function was ever called.
+- This is useful if you want to test a certain condition in your function that does not change the output but only calls another function.
+
+```javascript
+someFunction(); // This function calls innerFunction() 
+expect(innerFunction).toHaveBeenCalled();
+```
+
 - You can use the `not` keyword to test the opposite of something.
 
 ```javascript
