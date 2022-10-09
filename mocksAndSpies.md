@@ -39,18 +39,21 @@ test('add should add two numbers together', ()=>{
 
 - What if there is a function being called inside `add` which is not an input parameter?
 - How do we control what happens to that function call?
-- We can mock the module where we import the function.
+- We can mock the module/file we import the function from.
 
+Consider we have two files.
+
+A file containing an async function.
 ```javascript
 // apiFunctions.js
 export async function getNumberAsync() {
   const response = await fetch("www.getanumber.com");
-  return response.json();
+  const responseText = response.text();
+  return Number(responseText);
 }
 ```
 
-
-
+And a file containing our `add` function.
 ```javascript
 // utils.js
 import getNumberAsync from "./testAsync";
@@ -61,4 +64,30 @@ export async function add(a) {
 }
 ```
 
+Our test file could look like this.
+```javascript
+// utils.test.ts
+import { add } from "./test";
+
+// Mock the getNumberAsync function from "./testAsync"
+jest.mock("./testAsync", () => {
+  return {
+    __esModule: true, // Needed for ES6 imports
+    getNumberAsync: () => Promise.resolve(2), // Mock the implementation
+  };
+});
+
+describe("add", () => {
+  it("should add two numbers together", async () => {
+    // given
+    const firstNumber = 2;
+
+    // when
+    const result = await add(firstNumber);
+
+    // then
+    expect(result).toBe(4);
+  });
+});
+```
 
