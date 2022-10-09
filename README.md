@@ -6,4 +6,4 @@ This repo contains some basic knowledge about unit testing with jest.
 
 - [How is a test written?](howIsATestWritten.md)
 - [Mocks and spies](mocksAndSpies.md)
-
+- [Testing hooks](testingHooks.md)
