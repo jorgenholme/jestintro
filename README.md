@@ -1,10 +1,33 @@
 # Unit testing - A brief introduction to jest #
 
-## How does a test look?
+## How is a test written?
 
-- Jest globals include `test`, `describe`, `it`, and `expect`.
+- Jest globals include `test`, `describe`, `it`, and `expect`. You do not need to import these.
+- These are the basic functions you will use to write your tests.
 
-### test
+### `expect`
+- `expect` is used to compare a generated result to an expected result, for example: `expect(1 + 1).toBe(2)`.
+- In this example, `toBe` is a _matcher function_ which will make sure that the expected value is the same as the given input value.
+- `toBe` can be used to compare primitives such as numbers and strings, for comparing anything else you can use `toEqual`.
+
+
+```javascript
+const a = { prop: 1 };
+const b = { prop: 1 };
+expect(a).toBe(b); // Fails
+expect(a).toEqual(b); // Passes
+```
+
+- You can use the `not` keyword to test the opposite of something.
+
+```javascript
+const notEmptyString = "Hello";
+expect(notEmptyString.length).not.toBe(0);
+```
+
+There are many matcher functions. You can find them [here](https://jestjs.io/docs/expect) in the documentation.
+
+### `test`
 - `test` takes in a description and a callback function. The testing logic goes inside the callback.
 
 ```javascript
@@ -23,10 +46,7 @@ The output in the terminal will look like this
 
 ![image](https://user-images.githubusercontent.com/25080049/194770619-2321ab03-921f-4d30-b53b-ece39bb5db28.png)
 
-- In the above code example, `toBe` is a _matcher function_ which we use to compare our output to the expected result.
-- Other commonly used matcher functions include `toEqual` (used for deep equality between objects) and `toHaveBeenCalled` (used for checking if a particular function has been called)
-
-### describe and it
+### `describe` and `it`
 
 - If we want to structure our tests more, we can use `describe` and `it`.
 - `describe` allows us to group a set of tests, e.g., tests that belong to the same function.
@@ -37,7 +57,7 @@ Consider a scenario where a function has several outcomes you would like to test
 ```javascript
 // utils.js
 function add(a, b) {
-  if (!a || !b) return 0;
+  if (a === null || b === null) return 0;
 
   return a + b;
 }
@@ -49,7 +69,7 @@ describe("add", () => {
     expect(result).toBe(4);
   });
   
-  it("should return 0 if either number is falsy", () => {
+  it("should return 0 if either number is null", () => {
     const result1 = add(null, 2);
     const result2 = add(2, null);
     
@@ -59,11 +79,13 @@ describe("add", () => {
 });
 ```
 
-Here, we have two different test scenarios related to the same function, so it makes sense to group them together.
+Here we have two different test scenarios related to the same function, so it makes sense to group them together.
 
 The output will look like this:
 
-![image](https://user-images.githubusercontent.com/25080049/194771110-e7ed74d6-e956-4222-b9a2-a31b8d1f3513.png)
+![image](https://user-images.githubusercontent.com/25080049/194773004-2845a6d3-5132-4edf-a93a-4e9d652d723e.png)
+
+Putting the name of the function you are testing as the name of your `describe` block, and phrasing your `it` blocks as "should..." gives a very readable output.
 
 Describe can also be nested. This is useful when testing for example reducers, where you have one function with several cases, and each case may need several tests.
 
@@ -72,3 +94,34 @@ An example output of a nested describe would look like this:
 ![image](https://user-images.githubusercontent.com/25080049/194771725-94451dad-44ae-46f1-9869-4d224a838c65.png)
 
 
+### Example test structure
+
+- Writing your tests with a "given" => "when" => "then" structure can help to produce a tidy and readable test. 
+- Under "given" you can put any input parameter or mocks you will need to run the function you are testing.
+- Under "when" you can run the function.
+- Under "then" you do your comparisons using `expect` and matcher functions.
+- Note: This is just a preference.
+
+```javascript
+// utils.js
+function add(a, b) {
+  if (a === null || b === null) return 0;
+
+  return a + b;
+}
+
+// utils.test.js
+describe("add", () => {
+  it("should add two numbers together", () => {
+    // given
+    const numberA = 2;
+    const numberB = 2;
+    
+    // when
+    const result = add(numberA, numberB);
+    
+    // then
+    expect(result).toBe(4);
+  });
+});
+```
