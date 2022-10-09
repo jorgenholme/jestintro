@@ -1,14 +1,13 @@
 # What should we test? #
 
-- We only test logic, not components.
+- We only test logic (including hooks), not components.
 - Ideally we would test any exported function that contains some logic.
 - Since we're on a deadline we need to be a bit more picky with what we test.
-- Functions that contain almost no calculations or logic do not need to be tested.
 
 ```javascript
 export function incrementCounterState(dispatch, type) {
   if(type === "increment_counter") {
-    dispatch("increment_counter");
+    dispatch(type);
   }
 }
 ```
