@@ -46,7 +46,7 @@ function add(a, b) {
 }
 
 // utils.test.js
-test("Add should add two number together", () => {
+test("should add two number together", () => {
   const result = add(2, 2);
   expect(result).toBe(4);
 })
