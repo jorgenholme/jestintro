@@ -35,7 +35,7 @@ test('add should add two numbers together', ()=>{
 - Inside `jest.fn()` you can define an optional mock implementation of the function.
 - In this case, the mocked function will always return 3, which gives our `add` function a predictable output.
 
-## Async tests and mocks
+## Async tests and mocking modules
 
 - What if there is a function being called inside `add` which is not an input parameter?
 - How do we control what happens to that function call?
@@ -91,3 +91,6 @@ describe("add", () => {
 });
 ```
 
+- We use `jest.mock()` to mock modules.
+- Putting `jest.mock("./path/to/file")` will automatically mock the default export of that module.
+- If you want to mock specific functions, you can use the syntax shown above.
