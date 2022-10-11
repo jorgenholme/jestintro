@@ -135,4 +135,32 @@ describe("add", () => {
 });
 ```
 
+### Custom code snippet (for VSCode)
+
+- You can add a custom code snippet to set up an empty test suite for you.
+- In VSCode:
+  - Hit: `ctrl` + `shift` + `p`
+  - Search for and select **Preferences: Configure User Snippets**
+  - Choose the language to add the snippet for (TypeScript in our case)
+  - In the `typescript.json` file that opens, paste the following code:
+
+
+```json
+"Add test suite": {
+  "prefix": "describe",
+  "body": [
+    "describe(\"$0\", () => {",
+    "\t it(\"should...\", () => {",
+    "\t\t // given\n\n",
+    "\t\t // when\n\n",
+    "\t\t // then\n\n",
+    "\t});",
+    "});\n"
+  ],
+  "description": "Add empty test suite"
+}
+```
+
+Now when you start typing `describe` in your test files, you can select this new code snippet to auto fill an empty test suite for you.
+
 [Next page](mocksAndSpies.md)
