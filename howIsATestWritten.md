@@ -150,10 +150,10 @@ describe("add", () => {
   "prefix": "describe",
   "body": [
     "describe(\"$0\", () => {",
-    "\t it(\"should...\", () => {",
-    "\t\t // given\n\n",
-    "\t\t // when\n\n",
-    "\t\t // then\n\n",
+    "\tit(\"should...\", () => {",
+    "\t\t// given\n\n",
+    "\t\t// when\n\n",
+    "\t\t// then\n\n",
     "\t});",
     "});\n"
   ],
